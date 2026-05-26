@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>App Clipp – AI Video Repurposing Tool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#ff3d00;--black:#080808;--white:#f4f1ec;--muted:#555}
+body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:1.8rem 4rem;border-bottom:1px solid #1a1a1a}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-.03em}
+.logo span{color:var(--red)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:#888;text-decoration:none;font-size:.9rem;letter-spacing:.05em;transition:color .2s}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{background:var(--red);color:#fff;padding:.6rem 1.4rem;border-radius:4px;text-decoration:none;font-size:.85rem;letter-spacing:.05em;transition:opacity .2s}
+.nav-cta:hover{opacity:.85}
+
+/* HERO */
+.hero{max-width:960px;margin:0 auto;padding:7rem 2rem 5rem;text-align:center}
+.hero-badge{display:inline-block;border:1px solid #2a2a2a;padding:.35rem 1rem;border-radius:2px;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#888;margin-bottom:2rem}
+.hero h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3rem,8vw,6rem);line-height:1.0;letter-spacing:-.04em;margin-bottom:1.5rem}
+.hero h1 em{color:var(--red);font-style:normal}
+.hero p{color:#888;font-size:1.15rem;max-width:540px;margin:0 auto 2.5rem;line-height:1.8}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--red);color:#fff;padding:.9rem 2.2rem;border-radius:4px;text-decoration:none;font-size:.9rem;letter-spacing:.05em;transition:opacity .2s}
+.btn-primary:hover{opacity:.85}
+.btn-secondary{border:1px solid #2a2a2a;color:#888;padding:.9rem 2.2rem;border-radius:4px;text-decoration:none;font-size:.9rem;letter-spacing:.05em;transition:border-color .2s,color .2s}
+.btn-secondary:hover{border-color:#555;color:var(--white)}
+
+/* INPUT DEMO */
+.demo-box{max-width:680px;margin:4rem auto 0;background:#0f0f0f;border:1px solid #1e1e1e;border-radius:12px;padding:2rem}
+.demo-label{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:#555;margin-bottom:1rem}
+.demo-input{display:flex;gap:.75rem}
+.demo-input input{flex:1;background:#000;border:1px solid #2a2a2a;border-radius:6px;padding:.85rem 1.2rem;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s}
+.demo-input input:focus{border-color:var(--red)}
+.demo-input input::placeholder{color:#444}
+.demo-input button{background:var(--red);color:#fff;border:none;padding:.85rem 1.6rem;border-radius:6px;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.05em;transition:opacity .2s}
+.demo-input button:hover{opacity:.85}
+.demo-tags{display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap}
+.tag{background:#141414;border:1px solid #222;padding:.3rem .8rem;border-radius:2px;font-size:.72rem;color:#666;letter-spacing:.08em}
+
+/* STEPS */
+.steps{max-width:960px;margin:6rem auto;padding:0 2rem}
+.steps-header{text-align:center;margin-bottom:3rem}
+.steps-header h2{font-family:'Syne',sans-serif;font-weight:800;font-size:2.2rem;letter-spacing:-.02em;margin-bottom:.5rem}
+.steps-header p{color:#666;font-size:.9rem}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.step{background:#0c0c0c;border:1px solid #1a1a1a;border-radius:10px;padding:2rem}
+.step-num{font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;color:#1e1e1e;margin-bottom:1rem}
+.step h3{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:.5rem}
+.step p{color:#666;font-size:.85rem;line-height:1.7}
+.step-icon{width:36px;height:36px;background:var(--red);border-radius:6px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.1rem}
+
+/* STATS */
+.stats{display:flex;justify-content:center;gap:4rem;padding:3rem 2rem;border-top:1px solid #111;border-bottom:1px solid #111;margin:0 auto;max-width:960px}
+.stat-num{font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;color:var(--red)}
+.stat-label{color:#555;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;margin-top:.25rem}
+
+/* FOOTER */
+footer{text-align:center;padding:2.5rem;border-top:1px solid #111;color:#333;font-size:.8rem}
+footer a{color:var(--red);text-decoration:none;margin:0 .5rem}
+
+@media(max-width:768px){
+  nav{padding:1.5rem 1.5rem}
+  .steps-grid{grid-template-columns:1fr}
+  .stats{gap:2rem;flex-wrap:wrap}
+  .demo-input{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">App<span>Clipp</span></div>
+  <ul class="nav-links">
+    <li><a href="#">How it works</a></li>
+    <li><a href="#">Pricing</a></li>
+    <li><a href="terms.html">Terms</a></li>
+  </ul>
+  <a href="#" class="nav-cta">Get Started</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">🤖 Powered by AI — Gemini + Groq + Claude</div>
+  <h1>Turn YouTube into<br><em>Viral TikToks</em><br>Automatically</h1>
+  <p>Paste any YouTube URL. Our AI finds the best moments, writes captions, and uploads directly to your TikTok — hands free.</p>
+  <div class="hero-btns">
+    <a href="#" class="btn-primary">Start for Free →</a>
+    <a href="#" class="btn-secondary">Watch Demo</a>
+  </div>
+
+  <div class="demo-box">
+    <div class="demo-label">Try it — paste a YouTube URL</div>
+    <div class="demo-input">
+      <input type="text" placeholder="https://youtu.be/your-video-here" id="urlInput">
+      <button onclick="handleDemo()">Generate Clips</button>
+    </div>
+    <div class="demo-tags">
+      <span class="tag">✦ AI Clip Detection</span>
+      <span class="tag">✦ Auto Caption</span>
+      <span class="tag">✦ TikTok Upload</span>
+      <span class="tag">✦ Viral Score</span>
+    </div>
+  </div>
+</section>
+
+<div class="stats">
+  <div>
+    <div class="stat-num">100+</div>
+    <div class="stat-label">Clips per video</div>
+  </div>
+  <div>
+    <div class="stat-num">3s</div>
+    <div class="stat-label">Processing time</div>
+  </div>
+  <div>
+    <div class="stat-num">4 AI</div>
+    <div class="stat-label">Models working</div>
+  </div>
+  <div>
+    <div class="stat-num">Free</div>
+    <div class="stat-label">To start</div>
+  </div>
+</div>
+
+<section class="steps">
+  <div class="steps-header">
+    <h2>How it works</h2>
+    <p>From YouTube URL to TikTok in under a minute</p>
+  </div>
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-icon">🔗</div>
+      <h3>Paste YouTube URL</h3>
+      <p>Drop any YouTube video link. Long-form content, podcasts, tutorials — anything works.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-icon">🧠</div>
+      <h3>AI Finds Viral Moments</h3>
+      <p>Gemini Flash + Groq LLaMA analyze the transcript and score each segment for virality.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-icon">🚀</div>
+      <h3>Auto Upload to TikTok</h3>
+      <p>Clips are cut, captioned with hashtags, and posted directly to your TikTok profile.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2026 AppClipp &nbsp;·&nbsp;
+  <a href="terms.html">Terms of Service</a>
+  <a href="privacy.html">Privacy Policy</a>
+</footer>
+
+<script>
+function handleDemo() {
+  const url = document.getElementById('urlInput').value;
+  if (!url) { alert('Please enter a YouTube URL first!'); return; }
+  alert('🎬 Processing: ' + url + '\n\nIn the full version, this would:\n1. Extract transcript\n2. Find viral segments\n3. Generate captions\n4. Upload to TikTok automatically!');
+}
+</script>
+</body>
+</html>
